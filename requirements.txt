@@ -1,0 +1,8 @@
+# backend/requirements.txt
+
+Django>=5.0
+djangorestframework
+gunicorn
+django-cors-headers
+waitress==2.1.1
+

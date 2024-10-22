@@ -1,0 +1,35 @@
+# docker-compose.yml
+
+services:
+  backend:
+    build:
+      context: ./filemanager
+      dockerfile: Dockerfile
+    container_name: backend
+    command: gunicorn Filem.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./backend/media:/app/media
+      - ./backend/static:/app/static
+      - ./filemanager/db.sqlite3:/app/db.sqlite3
+
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=your-secret-key
+      - ALLOWED_HOSTS=*
+      
+  frontend:
+    build:
+      context: ./file-manager
+      dockerfile: Dockerfile
+    container_name: frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:80"  # 将容器的 80 端口映射到宿主机的 3000
+    environment:
+      - REACT_APP_API_BASE_URL=http://backend:8000/api
+    depends_on:
+      - backend

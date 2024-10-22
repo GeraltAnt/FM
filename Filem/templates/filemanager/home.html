@@ -1,0 +1,15 @@
+{% extends 'filemanager/base.html' %}
+
+{% block title %}首页{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">欢迎来到文件管理系统</h1>
+    <p class="lead">您可以在这里上传文件、查看文件以及管理物品。</p>
+    <hr class="my-4">
+    <p>请选择您要执行的操作：</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'upload_file' %}" role="button">上传文件</a>
+    <a class="btn btn-success btn-lg" href="{% url 'display_files' %}" role="button">查看文件</a>
+    <a class="btn btn-info btn-lg" href="{% url 'add_item' %}" role="button">管理物品</a>
+</div>
+{% endblock %}

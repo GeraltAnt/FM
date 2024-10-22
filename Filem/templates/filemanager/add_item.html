@@ -1,0 +1,41 @@
+{% extends 'filemanager/base.html' %}
+
+{% block title %}管理物品{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">增加物品</h2>
+<form method="post" class="mb-4">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form.site.label_tag }}{{ form.site }}
+    </div>
+    <div class="form-group">
+        {{ form.name.label_tag }}{{ form.name }}
+    </div>
+    <button type="submit" class="btn btn-primary">添加物品</button>
+</form>
+
+<h2>物品列表</h2>
+<table class="table table-bordered">
+    <thead class="thead-light">
+        <tr>
+            <th>站点</th>
+            <th>物品名称</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.site.name }}</td>
+            <td>{{ item.name }}</td>
+            <td><a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm">删除</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3" class="text-center">没有物品。</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

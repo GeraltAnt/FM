@@ -1,0 +1,31 @@
+{% extends 'filemanager/base.html' %}
+
+{% block title %}上传文件{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">上传文件</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">上传</button>
+</form>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    $("#id_site").change(function () {
+        var url = "{% url 'load_items' %}";
+        var siteId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'site': siteId
+            },
+            success: function (data) {
+                $("#id_item").html(data);
+            }
+        });
+    });
+</script>
+{% endblock %}
